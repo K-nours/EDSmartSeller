@@ -58,7 +58,7 @@ while (restart)
     Console.ForegroundColor = ConsoleColor.Green;
     var totalTime = DateTime.Now - startTime;
 
-    Console.WriteLine($"Vente terminé en {totalTime.Hours}:{totalTime.TotalMinutes}:{totalTime.Seconds}");
+    Console.WriteLine($"Vente terminé en {totalTime.Hours}:{totalTime.Minutes}:{totalTime.Seconds}");
     Console.ResetColor();
 
     Console.Write("Recommencer une Vente ? [O/N] : ");
@@ -67,7 +67,6 @@ while (restart)
     {
         restart = true;
         Console.Clear();
-
     }
     else
     {
