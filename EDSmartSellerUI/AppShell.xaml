@@ -5,10 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:EDSmartSellerUI"
     Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="True"
+   
     Title="EDSmartSeller">
 
     <ShellContent
-        Title="Home"
+        Title="Robot market unloader"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 </Shell>

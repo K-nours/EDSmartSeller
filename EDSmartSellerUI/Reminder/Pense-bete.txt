@@ -1,0 +1,9 @@
+﻿Pour récapituler, un projet .NET MAUI contient initialement les éléments suivants :
+
+Le fichier MauiProgram.cs contenant le code pour la création et la configuration de l’objet Application.
+
+Les fichiers App.xaml et App.xaml.cs qui fournissent des ressources d’interface utilisateur et créent la fenêtre initiale pour l’application.
+
+Les fichiers AppShell.xaml et AppShell.xaml.cs qui spécifient la page initiale de l’application et gèrent l’inscription des pages pour le routage de la navigation.
+
+Les fichiers MainPage.xaml et MainPage.xaml.cs qui définissent la disposition et la logique de l’interface utilisateur de la page affichée par défaut dans la fenêtre initiale.

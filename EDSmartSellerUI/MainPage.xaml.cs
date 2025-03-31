@@ -1,25 +1,28 @@
-﻿namespace EDSmartSellerUI
+﻿namespace EDSmartSellerUI;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    public MainPage()
     {
-        int count = 0;
+        InitializeComponent();
+    }
 
-        public MainPage()
+
+    private void ValidateNumericValue(object sender, TextChangedEventArgs e)
+    {
+        var entry = sender as Entry;
+        var newValue = e.NewTextValue;
+        if ( !string.IsNullOrEmpty(newValue) && !int.TryParse(newValue, out _))
         {
-            InitializeComponent();
-        }
-
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            // Rétablir la valeur précédente si l'entrée n'est pas un nombre
+            entry!.Text = e.OldTextValue;
         }
     }
 
+    private void OnCalibrate(object sender, EventArgs e)
+    {
+
+    }
 }
+
+
