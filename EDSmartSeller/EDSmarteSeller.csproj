@@ -9,6 +9,7 @@
     <Authors>K-nours</Authors>
     <Company>501st Guild</Company>
     <Copyright>MIT</Copyright>
+	  <VersionPrefix>1.0.2</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
