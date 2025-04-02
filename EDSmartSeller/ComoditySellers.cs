@@ -1,6 +1,5 @@
 ﻿namespace EDSmarteSeller
 {
-
     internal class ComoditySellers
     {
         private POINT _selectResourceLocation = new POINT();
@@ -9,6 +8,8 @@
         private POINT _sellPosition = new POINT();
 
         private readonly int ACTION_DELAY = 500;
+        private readonly int NB_LOOP_BEFORE_EXT_PAUSE = 10;
+        private readonly int EXTRA_PAUSE_TIME_SECONDES = 5;
 
         public enum SellMethode
         {
@@ -29,6 +30,7 @@
             //MouseManager.MoveMouse(_selectResourceLocation);
             //MouseManager.LeftClick(_selectResourceLocation);
             var quantityTodecrease = initialQuantity - 1;
+            var loopExtrPause = 0;
             for (int i = 1; i <= initialQuantity; i++)
             {
                 Console.WriteLine($"Sells comodities {i} of {initialQuantity}");
@@ -54,15 +56,25 @@
                         break;
                 }
 
-
-
                 MouseManager.MoveMouse(_sellPosition);
                 MouseManager.LeftClick(_selectResourceLocation);
 
                 quantityTodecrease--;
 
-                Console.WriteLine($"Pause {waitTime}s");
-                Thread.Sleep((int)waitTime * 1000);
+                if (loopExtrPause < NB_LOOP_BEFORE_EXT_PAUSE)
+                {
+                    Console.WriteLine($"Pause {waitTime}s");
+                    Thread.Sleep((int)waitTime * 1000);
+                    loopExtrPause++;
+                }
+                else
+                {
+                    Console.WriteLine($"Etra Pause  {EXTRA_PAUSE_TIME_SECONDES}s");
+                    Console.ForegroundColor=ConsoleColor.Yellow;
+                    Thread.Sleep((int)EXTRA_PAUSE_TIME_SECONDES * 1000);
+                    Console.ResetColor();
+                    loopExtrPause = 0;
+                }
             }
 
             Console.WriteLine("Finish");
@@ -84,6 +96,11 @@
         private void StayPush(int quantity)
         {
             int PushDelay = (quantity * 10) + ACTION_DELAY;
+
+            if (PushDelay <= 2500)
+            {
+                PushDelay = 2500;
+            }
 
             MouseManager.MoveMouse(_decreaseResourceLocation);
             MouseManager.LeftClick(_decreaseResourceLocation, PushDelay);
