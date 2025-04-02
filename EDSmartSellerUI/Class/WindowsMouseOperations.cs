@@ -1,9 +1,9 @@
-﻿namespace EDSmarteSeller
+﻿namespace EDSmartSellerUI
 {
     using System;
     using System.Runtime.InteropServices;
 
-    internal class MouseManager
+    class WindowsMouseOperations : IMouseOperations
     {
         [DllImport("user32.dll")]
         private static extern bool GetCursorPos(out POINT lpPoint);
@@ -20,8 +20,9 @@
 
 
         // Fonction pour obtenir la position actuelle de la souris
-        public static POINT GetMousePosition()
+        public  POINT GetCursorPositon()
         {
+
             if (GetCursorPos(out POINT point))
             {
                 return point;
@@ -30,20 +31,20 @@
         }
 
         // Fonction pour déplacer la souris vers des coordonnées spécifiées
-        public static void MoveMouse(POINT location)
+        public  void MoveCursor(POINT location)
         {
-            if (!SetCursorPos(location.X, location.Y))
+            if (!SetCursorPos((int)location.X, (int)location.Y))
             {
                 throw new Exception("Impossible de déplacer la souris.");
             }
         }
 
         // Fonction pour effectuer un clic gauche
-        public static void LeftClick(POINT point)
+        public  void LeftClick(POINT point)
         {
-            mouse_event(MOUSEEVENTF_LEFTDOWN , point.X, point.Y, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTDOWN, (int)point.X, (int)point.Y, 0, 0);
             Thread.Sleep(50);
-            mouse_event(MOUSEEVENTF_LEFTUP, point.X, point.Y, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTUP, (int)point.X, (int)point.Y, 0, 0);
         }
 
         /// <summary>
@@ -51,11 +52,11 @@
         /// </summary>
         /// <param name="point">Where to click</param>
         /// <param name="stayPushMs">Time to stay on decrease in milliseconds</param>
-        public static void LeftClick(POINT point, int stayPushMs)
+        public  void LeftClick(POINT point, int stayPushMs)
         {
-            mouse_event(MOUSEEVENTF_LEFTDOWN, point.X, point.Y, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTDOWN, (int)point.X, (int)point.Y, 0, 0);
             Thread.Sleep(stayPushMs);
-            mouse_event(MOUSEEVENTF_LEFTUP, point.X, point.Y, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTUP, (int)point.X, (int)point.Y, 0, 0);
         }
 
     }

@@ -5,10 +5,18 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <SignAssembly>False</SignAssembly>
+    <Authors>K-nours</Authors>
+    <Company>501st Guild</Company>
+    <Copyright>MIT</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="user32.dll" />
   </ItemGroup>
 
 </Project>

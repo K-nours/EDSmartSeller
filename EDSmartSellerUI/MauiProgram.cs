@@ -18,7 +18,12 @@ namespace EDSmartSellerUI
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
+#if WINDOWS
+            builder.Services.AddSingleton<IMouseOperations, WindowsMouseOperations>();
+#endif
+#if MACCATALYST
+            builder.Services.AddSingleton<IMouseOperations, MacMouseOperations>();
+#endif
             return builder.Build();
         }
     }
