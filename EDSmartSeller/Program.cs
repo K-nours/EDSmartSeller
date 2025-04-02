@@ -1,8 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EDSmarteSeller;
+using System.Reflection;
 
 var configMgr = new ConfigurationManager();
-
+Assembly assembly = Assembly.GetExecutingAssembly();
+AssemblyName assemblyName = assembly.GetName();
+Console.WriteLine($"Starting Elite Dangerous : Smart Seller (V{assemblyName.Version})");
 var edParams = configMgr.LoadConfiguration();
 if (edParams != null)
 {

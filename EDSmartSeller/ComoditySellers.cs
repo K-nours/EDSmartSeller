@@ -69,8 +69,8 @@
                 }
                 else
                 {
-                    Console.WriteLine($"Etra Pause  {EXTRA_PAUSE_TIME_SECONDES}s");
-                    Console.ForegroundColor=ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"Extra Pause  {EXTRA_PAUSE_TIME_SECONDES}s");  
                     Thread.Sleep((int)EXTRA_PAUSE_TIME_SECONDES * 1000);
                     Console.ResetColor();
                     loopExtrPause = 0;
