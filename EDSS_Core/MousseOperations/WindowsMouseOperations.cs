@@ -1,9 +1,10 @@
-﻿namespace EDSmarteSeller;
-using EDSS_Core;
+﻿namespace EDSS_Core.MousseOperations;
+
 using System;
 using System.Runtime.InteropServices;
+using EDSS_Core;
 
-internal class MouseManager
+public class WindowsMouseOperations : IMouseOperations
 {
     [DllImport("user32.dll")]
     private static extern bool GetCursorPos(out WIN_POINT lpPoint);
@@ -12,7 +13,7 @@ internal class MouseManager
     private static extern bool SetCursorPos(int X, int Y);
 
     [DllImport("user32.dll")]
-    private static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, UIntPtr dwExtraInfo);
+    private static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, nuint dwExtraInfo);
 
     private const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
     private const uint MOUSEEVENTF_LEFTUP = 0x0004;
@@ -20,30 +21,32 @@ internal class MouseManager
 
 
     // Fonction pour obtenir la position actuelle de la souris
-    public static WIN_POINT GetMousePosition()
+    public POINT GetCursorPositon()
     {
-        if (GetCursorPos(out WIN_POINT point))
+
+        if (GetCursorPos(out WIN_POINT wpoint))
         {
+            var point = new POINT(wpoint);
             return point;
         }
         throw new Exception("Impossible de récupérer la position de la souris.");
     }
 
     // Fonction pour déplacer la souris vers des coordonnées spécifiées
-    public static void MoveMouse(WIN_POINT location)
+    public void MoveCursor(POINT location)
     {
-        if (!SetCursorPos((int)location.X, (int)location.Y))
+        if (!SetCursorPos(location.win_x, location.win_y))
         {
             throw new Exception("Impossible de déplacer la souris.");
         }
     }
 
     // Fonction pour effectuer un clic gauche
-    public static void LeftClick(WIN_POINT point)
+    public void LeftClick(POINT point)
     {
-        mouse_event(MOUSEEVENTF_LEFTDOWN, (int)point.X, (int)point.Y, 0, 0);
+        mouse_event(MOUSEEVENTF_LEFTDOWN, point.win_x, point.win_y, 0, 0);
         Thread.Sleep(50);
-        mouse_event(MOUSEEVENTF_LEFTUP, (int)point.X, (int)point.Y, 0, 0);
+        mouse_event(MOUSEEVENTF_LEFTUP, point.win_y, point.win_y, 0, 0);
     }
 
     /// <summary>
@@ -51,11 +54,13 @@ internal class MouseManager
     /// </summary>
     /// <param name="point">Where to click</param>
     /// <param name="stayPushMs">Time to stay on decrease in milliseconds</param>
-    public static void LeftClick(WIN_POINT point, int stayPushMs)
+    public void LeftClick(POINT point, int stayPushMs)
     {
-        mouse_event(MOUSEEVENTF_LEFTDOWN, (int)point.X, (int)point.Y, 0, 0);
+        mouse_event(MOUSEEVENTF_LEFTDOWN, point.win_x, point.win_y, 0, 0);
         Thread.Sleep(stayPushMs);
-        mouse_event(MOUSEEVENTF_LEFTUP, (int)point.X, (int)point.Y, 0, 0);
+        mouse_event(MOUSEEVENTF_LEFTUP, point.win_x, point.win_y, 0, 0);
     }
 
 }
+
+

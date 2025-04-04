@@ -1,5 +1,7 @@
 ﻿namespace EDSmartSellerUI;
 
+using EDSS_Core.MousseOperations;
+
 public partial class MainPage : ContentPage
 {
 

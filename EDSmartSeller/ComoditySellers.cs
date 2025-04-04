@@ -1,12 +1,13 @@
 ﻿namespace EDSmarteSeller;
 using EDSS_Core;
+using EDSS_Core.MousseOperations;
 
-internal class ComoditySellers(EDSmartSellerParameters parameters)
+internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperations mouseMnager)
 {
-    private WIN_POINT _selectResourceLocation = parameters.SelectResourceLocation;
-    private WIN_POINT _decreaseResourceLocation = parameters.DecreaseResourceLocation;
-    private WIN_POINT _increaseResourceLocation = parameters.IncreaseResourceLocation;
-    private WIN_POINT _sellPosition = parameters.SellPosition;
+    private readonly POINT _selectResourceLocation = parameters.SelectResourceLocation;
+    private readonly POINT _decreaseResourceLocation = parameters.DecreaseResourceLocation;
+    private readonly POINT _increaseResourceLocation = parameters.IncreaseResourceLocation;
+    private readonly POINT _sellPosition = parameters.SellPosition;
 
     private readonly int ACTION_DELAY = 500;
     private readonly int NB_LOOP_BEFORE_EXT_PAUSE = 10;
@@ -24,8 +25,8 @@ internal class ComoditySellers(EDSmartSellerParameters parameters)
         for (int i = 1; i <= initialQuantity; i++)
         {
             Console.WriteLine($"Sells comodities {i} of {initialQuantity}");
-            MouseManager.MoveMouse(_selectResourceLocation);
-            MouseManager.LeftClick(_selectResourceLocation);
+            mouseMnager.MoveCursor(_selectResourceLocation);
+            mouseMnager.LeftClick(_selectResourceLocation);
             Thread.Sleep(ACTION_DELAY);
 
             var sellMod = ComputeSellMode(quantityTodecrease);
@@ -40,9 +41,9 @@ internal class ComoditySellers(EDSmartSellerParameters parameters)
                     break;
             }
 
-            MouseManager.MoveMouse(_sellPosition);
+            mouseMnager.MoveCursor(_sellPosition);
             Thread.Sleep(ACTION_DELAY);
-            MouseManager.LeftClick(_selectResourceLocation);
+            mouseMnager.LeftClick(_selectResourceLocation);
 
             quantityTodecrease--;
 
@@ -87,25 +88,25 @@ internal class ComoditySellers(EDSmartSellerParameters parameters)
             PushDelay = 2500;
         }
 
-        MouseManager.MoveMouse(_decreaseResourceLocation);
-        MouseManager.LeftClick(_decreaseResourceLocation, PushDelay);
+        mouseMnager.MoveCursor(_decreaseResourceLocation);
+        mouseMnager.LeftClick(_decreaseResourceLocation, PushDelay);
         Thread.Sleep(ACTION_DELAY);
 
-        MouseManager.MoveMouse(_increaseResourceLocation);
-        MouseManager.LeftClick(_increaseResourceLocation);
+        mouseMnager.MoveCursor(_increaseResourceLocation);
+        mouseMnager.LeftClick(_increaseResourceLocation);
         Thread.Sleep(ACTION_DELAY);
     }
 
     private void SellByClick(int quantity)
     {
-        MouseManager.MoveMouse(_decreaseResourceLocation);
+        mouseMnager.MoveCursor(_decreaseResourceLocation);
         for (int j = 0; j <= quantity; j++)
         {
-            MouseManager.LeftClick(_selectResourceLocation);
+            mouseMnager.LeftClick(_selectResourceLocation);
             Thread.Sleep(15);
         }
-        MouseManager.MoveMouse(_increaseResourceLocation);
-        MouseManager.LeftClick(_increaseResourceLocation);
+        mouseMnager.MoveCursor(_increaseResourceLocation);
+        mouseMnager.LeftClick(_increaseResourceLocation);
         Thread.Sleep(ACTION_DELAY);
     }
 }

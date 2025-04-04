@@ -1,4 +1,4 @@
-﻿namespace EDSmartSellerUI;
+﻿namespace EDSS_Core.MousseOperations;
 using EDSS_Core;
 
 public interface IMouseOperations

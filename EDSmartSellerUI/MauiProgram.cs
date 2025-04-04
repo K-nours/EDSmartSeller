@@ -1,4 +1,4 @@
-﻿using EDSmartSellerUI.Class;
+﻿using EDSS_Core.MousseOperations;
 using Microsoft.Extensions.Logging;
 
 namespace EDSmartSellerUI

@@ -1,8 +1,8 @@
 ﻿namespace EDSmartSellerUI;
 
 using Newtonsoft.Json;
+using EDSS_Core.MousseOperations;
 using EDSS_Core;
-
 
 internal class ConfigurationManager
 {
@@ -35,13 +35,13 @@ internal class ConfigurationManager
     public async Task<EDSmartSellerParameters> ResetConfig( Editor editor)
     {
         EDSmartSellerParameters eDSmartSellerParameters = new EDSmartSellerParameters();
-        editor.Text += AddLine("Demarrage Caliabration...");
+        editor.Text += ConfigurationManager.AddLine("Demarrage Caliabration...");
 
-        editor.Text += AddLine("Etape 1 Deplacer la sourie sur la ligne de la ressource a vendre et appuyer sur une touche");
+        editor.Text += ConfigurationManager.AddLine("Etape 1 Deplacer la sourie sur la ligne de la ressource a vendre et appuyer sur une touche");
         await Task.Run(WaitForKeyPress);
 
         eDSmartSellerParameters.SelectResourceLocation = _mouseOperations.GetCursorPositon();
-        editor.Text += AddLine($"Position save for select resource {eDSmartSellerParameters.SelectResourceLocation.X}:{eDSmartSellerParameters.SelectResourceLocation.Y}");
+        //editor.Text += AddLine($"Position save for select resource {eDSmartSellerParameters.SelectResourceLocation.X}:{eDSmartSellerParameters.SelectResourceLocation.Y}");
 
         //Console.WriteLine("Etape 2 deplacer la sourie sur le bouton quantité \"-\" et appuyer sur une touche");
         //Console.ReadKey();
@@ -74,7 +74,7 @@ internal class ConfigurationManager
         Console.ResetColor();
     }
 
-    private string AddLine(string text)
+    private static string AddLine(string text)
     {
         return text+"\n";
     }
