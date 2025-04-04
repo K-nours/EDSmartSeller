@@ -42,20 +42,21 @@ while (restart)
     }
 
     Console.Write("Temps entre 2 cyle (en seconde, ex: 1,5) : ");
-    float waitTimeSeconde = 3;
+    float waitTimeSeconde = ReadFloatEntry()?? 2;
 
-    while (!float.TryParse(Console.ReadLine()?.Replace(".", ","), out waitTimeSeconde))
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Valeur non valide: Entre un nombre entier, out float EX: 1,5");
-        Console.ResetColor();
-    }
+    Console.WriteLine($"Temps 'Extra pause' (toute les 10 ventes) la valeur par defaut est de 5s. Laissez vide pour la conserver ou entrer une autre valeur : ");
+    var extraPause = ReadFloatEntry(true)?? 5;
+
 
     Console.WriteLine("Appuyer sur un touche pour commencer la vente");
     Console.ReadKey();
     var startTime = DateTime.Now;
     Console.WriteLine("Demarrage dans 3s");
-    Thread.Sleep(3000);
+    for (int i = 3; i > 0; i--)
+    {
+        Console.WriteLine(i);
+        Thread.Sleep(1000);
+    }
     sellManeger.Sell(initialQuantity, waitTimeSeconde);
 
     Console.ForegroundColor = ConsoleColor.Green;
@@ -77,6 +78,25 @@ while (restart)
         Console.WriteLine("Exiting program...");
         restart = false;
     }
+}
+
+float? ReadFloatEntry(bool allowEmpty = false)
+{
+    float result;
+    var entry = Console.ReadLine();
+    if(allowEmpty && string.IsNullOrEmpty(entry))
+    {
+        return null;
+    }
+
+    while (!float.TryParse(entry?.Replace(".", ","), out result))
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Valeur non valide: Entre un nombre entier, out float EX: 1,5");
+        Console.ResetColor();
+    }
+
+    return result;
 }
 
 

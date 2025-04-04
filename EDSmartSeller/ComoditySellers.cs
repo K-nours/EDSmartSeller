@@ -9,7 +9,6 @@
 
         private readonly int ACTION_DELAY = 500;
         private readonly int NB_LOOP_BEFORE_EXT_PAUSE = 10;
-        private readonly int EXTRA_PAUSE_TIME_SECONDES = 5;
 
         public enum SellMethode
         {
@@ -25,10 +24,8 @@
             _sellPosition = parameters.SellPosition;
         }
 
-        public void Sell(int initialQuantity, float waitTime)
+        public void Sell(int initialQuantity, float waitTime, float extraPause = 5)
         {
-            //MouseManager.MoveMouse(_selectResourceLocation);
-            //MouseManager.LeftClick(_selectResourceLocation);
             var quantityTodecrease = initialQuantity - 1;
             var loopExtrPause = 0;
             for (int i = 1; i <= initialQuantity; i++)
@@ -43,13 +40,7 @@
                 switch (sellMod)
                 {
                     case SellMethode.Byclick:
-                        MouseManager.MoveMouse(_decreaseResourceLocation);
-                        for (int j = 0; j < quantityTodecrease; j++)
-                        {
-                            MouseManager.LeftClick(_selectResourceLocation);
-                            Thread.Sleep(10);
-
-                        }
+                        SellByClick(quantityTodecrease);
                         break;
                     case SellMethode.StayPush:
                         StayPush(quantityTodecrease);
@@ -57,6 +48,7 @@
                 }
 
                 MouseManager.MoveMouse(_sellPosition);
+                Thread.Sleep(ACTION_DELAY);
                 MouseManager.LeftClick(_selectResourceLocation);
 
                 quantityTodecrease--;
@@ -70,8 +62,8 @@
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"Extra Pause  {EXTRA_PAUSE_TIME_SECONDES}s");  
-                    Thread.Sleep((int)EXTRA_PAUSE_TIME_SECONDES * 1000);
+                    Console.WriteLine($"Extra Pause  {extraPause}s");
+                    Thread.Sleep((int)extraPause * 1000);
                     Console.ResetColor();
                     loopExtrPause = 0;
                 }
@@ -106,6 +98,19 @@
             MouseManager.LeftClick(_decreaseResourceLocation, PushDelay);
             Thread.Sleep(ACTION_DELAY);
 
+            MouseManager.MoveMouse(_increaseResourceLocation);
+            MouseManager.LeftClick(_increaseResourceLocation);
+            Thread.Sleep(ACTION_DELAY);
+        }
+
+        private void SellByClick(int quantity)
+        {
+            MouseManager.MoveMouse(_decreaseResourceLocation);
+            for (int j = 0; j <= quantity; j++)
+            {
+                MouseManager.LeftClick(_selectResourceLocation);
+                Thread.Sleep(15);
+            }
             MouseManager.MoveMouse(_increaseResourceLocation);
             MouseManager.LeftClick(_increaseResourceLocation);
             Thread.Sleep(ACTION_DELAY);
