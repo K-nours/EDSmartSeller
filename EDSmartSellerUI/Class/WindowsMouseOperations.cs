@@ -2,11 +2,12 @@
 {
     using System;
     using System.Runtime.InteropServices;
+    using EDSS_Core;
 
     class WindowsMouseOperations : IMouseOperations
     {
         [DllImport("user32.dll")]
-        private static extern bool GetCursorPos(out POINT lpPoint);
+        private static extern bool GetCursorPos(out WIN_POINT lpPoint);
 
         [DllImport("user32.dll")]
         private static extern bool SetCursorPos(int X, int Y);
@@ -20,10 +21,10 @@
 
 
         // Fonction pour obtenir la position actuelle de la souris
-        public  POINT GetCursorPositon()
+        public  WIN_POINT GetCursorPositon()
         {
 
-            if (GetCursorPos(out POINT point))
+            if (GetCursorPos(out WIN_POINT point))
             {
                 return point;
             }
@@ -31,7 +32,7 @@
         }
 
         // Fonction pour déplacer la souris vers des coordonnées spécifiées
-        public  void MoveCursor(POINT location)
+        public  void MoveCursor(WIN_POINT location)
         {
             if (!SetCursorPos((int)location.X, (int)location.Y))
             {
@@ -40,7 +41,7 @@
         }
 
         // Fonction pour effectuer un clic gauche
-        public  void LeftClick(POINT point)
+        public  void LeftClick(WIN_POINT point)
         {
             mouse_event(MOUSEEVENTF_LEFTDOWN, (int)point.X, (int)point.Y, 0, 0);
             Thread.Sleep(50);
@@ -52,7 +53,7 @@
         /// </summary>
         /// <param name="point">Where to click</param>
         /// <param name="stayPushMs">Time to stay on decrease in milliseconds</param>
-        public  void LeftClick(POINT point, int stayPushMs)
+        public  void LeftClick(WIN_POINT point, int stayPushMs)
         {
             mouse_event(MOUSEEVENTF_LEFTDOWN, (int)point.X, (int)point.Y, 0, 0);
             Thread.Sleep(stayPushMs);

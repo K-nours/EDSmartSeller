@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EDSmartSellerUI.Class;
+using Microsoft.Extensions.Logging;
 
 namespace EDSmartSellerUI
 {

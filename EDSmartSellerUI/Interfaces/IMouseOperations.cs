@@ -1,4 +1,5 @@
 ﻿namespace EDSmartSellerUI;
+using EDSS_Core;
 
 public interface IMouseOperations
 {

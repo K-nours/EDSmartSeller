@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDSmarteSeller", "EDSmartSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDSmartSellerUI", "EDSmartSellerUI\EDSmartSellerUI.csproj", "{77B712C2-CB24-490B-B2D9-19A31B2FE1A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDSS_Core", "EDSS_Core\EDSS_Core.csproj", "{125830E9-94D9-47A4-B650-802B4D3FE992}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{77B712C2-CB24-490B-B2D9-19A31B2FE1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77B712C2-CB24-490B-B2D9-19A31B2FE1A1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77B712C2-CB24-490B-B2D9-19A31B2FE1A1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{125830E9-94D9-47A4-B650-802B4D3FE992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{125830E9-94D9-47A4-B650-802B4D3FE992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{125830E9-94D9-47A4-B650-802B4D3FE992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{125830E9-94D9-47A4-B650-802B4D3FE992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

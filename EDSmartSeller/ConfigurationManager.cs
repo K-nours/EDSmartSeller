@@ -1,7 +1,7 @@
 ﻿namespace EDSmarteSeller
 {
     using Newtonsoft.Json;
-
+    using EDSS_Core;
 
     internal class ConfigurationManager
     {
@@ -25,9 +25,9 @@
         }
 
 
-        public EDSmartSellerParameters ResetConfig()
+        public static EDSmartSellerParameters ResetConfig()
         {
-            EDSmartSellerParameters eDSmartSellerParameters = new EDSmartSellerParameters();
+            EDSmartSellerParameters eDSmartSellerParameters = new();
             Console.WriteLine("Demarrage Caliabration...");
             Console.WriteLine("Etape 1 Deplacer la sourie sur la ligne de la ressource a vendre et appuyer sur une touche");
             Console.ReadKey();
@@ -52,7 +52,7 @@
 
         }
 
-        private void DisplayInfo(string text)
+        private static void DisplayInfo(string text)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"[INFO] {text}");

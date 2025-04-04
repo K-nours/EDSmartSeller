@@ -21,7 +21,7 @@ if (edParams != null)
 
 if (edParams == null)
 {
-    edParams = configMgr.ResetConfig();
+    edParams = ConfigurationManager.ResetConfig();
     configMgr.SaveConfiguration(edParams);
 }
 
