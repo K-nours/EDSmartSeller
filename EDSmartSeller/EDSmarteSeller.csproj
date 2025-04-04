@@ -9,11 +9,15 @@
 		<Authors>K-nours</Authors>
 		<Company>501st Guild</Company>
 		<Copyright>MIT</Copyright>
-		<Version>1.3.0</Version>
+		<Version>1.4.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\EDSS_Core\EDSS_Core.csproj" />
 	</ItemGroup>
 
 </Project>

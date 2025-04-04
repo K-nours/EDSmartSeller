@@ -1,11 +1,43 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EDSmarteSeller;
+using EDSS_Core.MousseOperations;
 using System.Reflection;
 
-var configMgr = new ConfigurationManager();
 Assembly assembly = Assembly.GetExecutingAssembly();
 AssemblyName assemblyName = assembly.GetName();
 Console.WriteLine($"Starting Elite Dangerous : Smart Seller (V{assemblyName.Version})");
+
+
+//ConfigurationManager configMgr = null;
+IMouseOperations mouseOperations = null;
+var chooseSelected = true;
+while (chooseSelected)
+{
+    Console.WriteLine("Selectionez votre system d'exploitation :");
+    Console.WriteLine("  1 - Windows");
+    Console.WriteLine("  2 - Mac OS");
+    Console.Write("response : ");
+
+    var osSelection = Console.ReadKey().KeyChar;
+    switch (osSelection)
+    {
+        case '1':
+            mouseOperations = new WindowsMouseOperations();
+
+            chooseSelected = false;
+            break;
+
+        case '2':
+            mouseOperations = new WindowsMouseOperations();
+            chooseSelected = false;
+            break;
+        default:
+            Console.WriteLine("Ivalide OS selected");
+            break;
+    }
+    Console.WriteLine();
+}
+var configMgr = new ConfigurationManager(mouseOperations);
 var edParams = configMgr.LoadConfiguration();
 if (edParams != null)
 {
@@ -29,10 +61,10 @@ Console.WriteLine();
 
 
 var restart = true;
-var sellManeger = new ComoditySellers(edParams);
+var sellManeger = new ComoditySellers(edParams, mouseOperations);
 while (restart)
 {
-    int initialQuantity = 0;
+    int initialQuantity;
     Console.Write("Quantité de ressource initial a vendre : ");
     while (!int.TryParse(Console.ReadLine(), out initialQuantity))
     {
@@ -42,10 +74,10 @@ while (restart)
     }
 
     Console.Write("Temps entre 2 cyle (en seconde, ex: 1,5) : ");
-    float waitTimeSeconde = ReadFloatEntry()?? 2;
+    float waitTimeSeconde = ReadFloatEntry() ?? 2;
 
     Console.WriteLine($"Temps 'Extra pause' (toute les 10 ventes) la valeur par defaut est de 5s. Laissez vide pour la conserver ou entrer une autre valeur : ");
-    var extraPause = ReadFloatEntry(true)?? 5;
+    var extraPause = ReadFloatEntry(true) ?? 5;
 
 
     Console.WriteLine("Appuyer sur un touche pour commencer la vente");
@@ -57,7 +89,7 @@ while (restart)
         Console.WriteLine(i);
         Thread.Sleep(1000);
     }
-    sellManeger.Sell(initialQuantity, waitTimeSeconde);
+    sellManeger.Sell(initialQuantity, waitTimeSeconde, extraPause);
 
     Console.ForegroundColor = ConsoleColor.Green;
     var totalTime = DateTime.Now - startTime;
@@ -80,11 +112,11 @@ while (restart)
     }
 }
 
-float? ReadFloatEntry(bool allowEmpty = false)
+static float? ReadFloatEntry(bool allowEmpty = false)
 {
     float result;
     var entry = Console.ReadLine();
-    if(allowEmpty && string.IsNullOrEmpty(entry))
+    if (allowEmpty && string.IsNullOrEmpty(entry))
     {
         return null;
     }
