@@ -35,4 +35,37 @@ public class POINT
 
     public POINT() { }
 
+    public string displayX
+    {
+        get
+        {
+            if (win_x >= 0 && mac_x >= 0)
+            {
+                double maxValue = (win_x > mac_x) ? win_x : mac_x;
+                return maxValue.ToString();
+            }
+            else
+            {
+                double minValue = (win_x < mac_x) ? win_x : mac_x;
+                return minValue.ToString();
+            }
+        }
+    }
+
+    public string displayY
+    {
+        get
+        {
+            if (win_y >= 0 && mac_y >= 0)
+            {
+                double maxValue = (win_y > mac_y) ? win_y : mac_y;
+                return maxValue.ToString();
+            }
+            else
+            {
+                double minValue = (win_y < mac_y) ? win_y : mac_y;
+                return minValue.ToString();
+            }
+        }
+    }
 }

@@ -3,12 +3,17 @@
 using Newtonsoft.Json;
 using EDSS_Core.MousseOperations;
 using EDSS_Core;
+using EDSmartSellerUI.Enum;
+using EDSmartSellerUI.Events;
 
 internal class ConfigurationManager
 {
     private readonly string saveFile = ".\\EDSSconfig.json";
     private IMouseOperations _mouseOperations;
     private bool _keyPress = false;
+
+
+
     public ConfigurationManager(IMouseOperations mouseOperations)
     {
         _mouseOperations = mouseOperations;
@@ -32,31 +37,32 @@ internal class ConfigurationManager
     }
 
 
-    public async Task<EDSmartSellerParameters> ResetConfig( Editor editor)
+    public async Task<EDSmartSellerParameters> ResetConfig()
     {
         EDSmartSellerParameters eDSmartSellerParameters = new EDSmartSellerParameters();
-        editor.Text += ConfigurationManager.AddLine("Demarrage Caliabration...");
+        DisplayMessage("Demarrage Caliabration...");
 
-        editor.Text += ConfigurationManager.AddLine("Etape 1 Deplacer la sourie sur la ligne de la ressource a vendre et appuyer sur une touche");
+        DisplayMessage("Etape 1 Deplacer la sourie sur la ligne de la ressource a vendre et appuyer sur une touche");
         await Task.Run(WaitForKeyPress);
 
         eDSmartSellerParameters.SelectResourceLocation = _mouseOperations.GetCursorPositon();
-        //editor.Text += AddLine($"Position save for select resource {eDSmartSellerParameters.SelectResourceLocation.X}:{eDSmartSellerParameters.SelectResourceLocation.Y}");
 
-        //Console.WriteLine("Etape 2 deplacer la sourie sur le bouton quantité \"-\" et appuyer sur une touche");
-        //Console.ReadKey();
+        DisplayMessage($"Position save for select resource {eDSmartSellerParameters.SelectResourceLocation.displayX}:{eDSmartSellerParameters.SelectResourceLocation.displayY}", MessageType.Info);
+
+        DisplayMessage("Etape 2 deplacer la sourie sur le bouton quantité \"-\" et appuyer sur une touche");
+        await Task.Run(WaitForKeyPress);
         eDSmartSellerParameters.DecreaseResourceLocation = _mouseOperations.GetCursorPositon();
-        //DisplayInfo($"Position save for decrease Reseource {eDSmartSellerParameters.DecreaseResourceLocation.X}:{eDSmartSellerParameters.DecreaseResourceLocation.Y}");
-        
-        //Console.WriteLine("Etape 3 deplacer la souri sur le bouton de quantité \"+\" et appuyer sur une touche");
-        //Console.ReadKey();
+        DisplayMessage($"Position save for decrease Reseource {eDSmartSellerParameters.DecreaseResourceLocation.displayX}:{eDSmartSellerParameters.DecreaseResourceLocation.displayY}", MessageType.Info);
+
+        DisplayMessage("Etape 3 deplacer la souri sur le bouton de quantité \"+\" et appuyer sur une touche");
+        await Task.Run(WaitForKeyPress);
         eDSmartSellerParameters.IncreaseResourceLocation = _mouseOperations.GetCursorPositon();
-        //DisplayInfo($"Position save for increase resource {eDSmartSellerParameters.IncreaseResourceLocation.X}:{eDSmartSellerParameters.IncreaseResourceLocation.Y}");
-        
-        //Console.WriteLine("Etape 4 deplacer la souri sur le bouton de vente et appuyer sur une touche");
-        //Console.ReadKey();
+        DisplayMessage($"Position save for increase resource {eDSmartSellerParameters.IncreaseResourceLocation.displayX}:{eDSmartSellerParameters.IncreaseResourceLocation.displayY}", MessageType.Info);
+
+        DisplayMessage("Etape 4 deplacer la souri sur le bouton de vente et appuyer sur une touche");
+        await Task.Run(WaitForKeyPress);
         eDSmartSellerParameters.SellPosition = _mouseOperations.GetCursorPositon();
-        //DisplayInfo($"Position of sell button {eDSmartSellerParameters.SellPosition.X}:{eDSmartSellerParameters.SellPosition.Y}");
+        DisplayMessage($"Position of sell button {eDSmartSellerParameters.SellPosition.displayY}:{eDSmartSellerParameters.SellPosition.displayY}", MessageType.Info);
 
         return eDSmartSellerParameters;
 
@@ -67,16 +73,9 @@ internal class ConfigurationManager
         _keyPress = true;
     }
 
-    private void DisplayInfo(string text)
-    {
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"[INFO] {text}");
-        Console.ResetColor();
-    }
-
     private static string AddLine(string text)
     {
-        return text+"\n";
+        return text + "\n";
     }
 
     private void WaitForKeyPress()
@@ -86,6 +85,11 @@ internal class ConfigurationManager
             Thread.Sleep(100);
         }
 
-        _keyPress= false;
+        _keyPress = false;
+    }
+
+    private void DisplayMessage(string text, MessageType messageType = MessageType.Default)
+    {
+        MessageEvent.RaiseEvent(this, text, messageType);
     }
 }
