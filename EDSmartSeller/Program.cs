@@ -28,7 +28,7 @@ while (chooseSelected)
             break;
 
         case '2':
-            mouseOperations = new WindowsMouseOperations();
+            mouseOperations = new MacMouseOperations();
             chooseSelected = false;
             break;
         default:
