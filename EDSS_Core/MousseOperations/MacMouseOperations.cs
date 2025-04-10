@@ -1,6 +1,7 @@
 ﻿namespace EDSS_Core.MousseOperations;
-using System.Runtime.InteropServices;
+
 using EDSS_Core;
+using System.Runtime.InteropServices;
 
 public class MacMouseOperations : IMouseOperations
 {
@@ -8,8 +9,12 @@ public class MacMouseOperations : IMouseOperations
     private static extern nint CGEventCreateMouseEvent(nint source, int mouseType, MAC_POINT mousePosition, int mouseButton);
     [DllImport("/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices")]
     private static extern void CGEventPost(int tap, nint @event);
+    [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+    private static extern MAC_POINT CGEventGetLocation(IntPtr eventRef);
+    [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+    private static extern IntPtr CGEventCreate(IntPtr source);
     [DllImport("/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices")]
-    private static extern MAC_POINT CGEventGetLocation(nint @event);
+    private static extern void CGWarpMouseCursorPosition(MAC_POINT newPosition);
 
     private const int kCGEventLeftMouseDown = 1;
     private const int kCGEventLeftMouseUp = 2;
@@ -18,12 +23,8 @@ public class MacMouseOperations : IMouseOperations
 
     public POINT GetCursorPositon()
     {
-        var eventRef = CGEventCreateMouseEvent(0, kCGEventMouseMoved, new MAC_POINT(), 0);
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        WriteDebug($"DEBUG: eventRef = {eventRef}");
-
-
-        var location = CGEventGetLocation(eventRef);
+        IntPtr eventRef = CGEventCreate(IntPtr.Zero);
+        MAC_POINT location = CGEventGetLocation(eventRef);
         WriteDebug(location.X + " " + location.Y);
         return new POINT(location);
     }
@@ -31,8 +32,10 @@ public class MacMouseOperations : IMouseOperations
     public void MoveCursor(POINT location)
     {
         var mac_point = new MAC_POINT { X = location.mac_x, Y = location.mac_y };
-        var mouseMoveEvent = CGEventCreateMouseEvent(0, kCGEventMouseMoved, mac_point, 0);
-        CGEventPost(kCGHIDEventTap, mouseMoveEvent);
+        var move = CGEventCreateMouseEvent(nint.Zero ,kCGEventMouseMoved, mac_point,0);
+        
+        CGWarpMouseCursorPosition(mac_point);
+        CGEventPost(kCGHIDEventTap, move);
     }
 
     public void LeftClick(POINT position)
@@ -65,28 +68,3 @@ public class MacMouseOperations : IMouseOperations
         Console.ResetColor();
     }
 }
-
-
-
-//class Program_test_sample
-//{
-//    [StructLayout(LayoutKind.Sequential)]
-//    public struct CGPoint
-//    {
-//        public double X;
-//        public double Y;
-//    }
-
-//    [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
-//    private static extern CGPoint CGEventGetLocation(IntPtr eventRef);
-
-//    [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
-//    private static extern IntPtr CGEventCreate(IntPtr source);
-
-//    static void Main()
-//    {
-//        IntPtr eventRef = CGEventCreate(IntPtr.Zero);
-//        CGPoint point = CGEventGetLocation(eventRef);
-//        Console.WriteLine($"Pointer Location: X = {point.X}, Y = {point.Y}");
-//    }
-//}

@@ -61,50 +61,6 @@ if (edParams == null)
 
 Console.WriteLine();
 
-/*-----------------------------------------*\
- *                                         *
- *   Test debug Mac Should be delate later *
- *                                         *    
-\*-----------------------------------------*/
-
-var keepTesting = true;
-if (target == EnvironementTarget.Mac)
-{
-    while (keepTesting)
-    {
-        Console.Write("Enter TEST mode [O/N]: ");
-        var testReponse = Console.ReadKey().KeyChar;
-        Console.WriteLine();
-        if ((char.ToUpper(testReponse)) == 'O')
-        {
-            var tester = new TestMouseBehaviour(mouseOperations!);
-            Console.WriteLine("Select operation :");
-            Console.WriteLine(" 1 - Move Mouse");
-            Console.WriteLine(" 2 - Get Moude location");
-            Console.Write("Response : ");
-            var testK = Console.ReadKey().KeyChar;
-            Console.WriteLine();
-            switch (testK)
-            {
-                case '1':
-                    tester.MoveMouseTo();
-                    break;
-                case '2':
-                    tester.GetMacMouseLocation();
-                    break;
-            }
-        }
-        else
-        {
-            keepTesting = false;
-        }
-    }
-
-    Console.WriteLine();
-}
-
-/*------------------ END ----------------------------*/
-
 var restart = true;
 var sellManeger = new ComoditySellers(edParams, mouseOperations!);
 while (restart)
