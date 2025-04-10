@@ -2,6 +2,7 @@
 
 using EDSS_Core;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 public class MacMouseOperations : IMouseOperations
 {
@@ -31,18 +32,17 @@ public class MacMouseOperations : IMouseOperations
 
     public void MoveCursor(POINT location)
     {
-        var mac_point = new MAC_POINT { X = location.mac_x, Y = location.mac_y };
-        var move = CGEventCreateMouseEvent(nint.Zero ,kCGEventMouseMoved, mac_point,0);
-        
-        CGWarpMouseCursorPosition(mac_point);
+        var move = CGEventCreateMouseEvent(nint.Zero, kCGEventMouseMoved, location.MacPoint, 0);
+
+        CGWarpMouseCursorPosition(location.MacPoint);
         CGEventPost(kCGHIDEventTap, move);
     }
 
     public void LeftClick(POINT position)
     {
-        var macPoint = new MAC_POINT { X = position.mac_x, Y = position.mac_y };
-        var down = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseDown, macPoint, 0);
-        var up = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseUp, macPoint, 0);
+
+        var down = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseDown, position.MacPoint, 0);
+        var up = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseUp, position.MacPoint, 0);
 
         CGEventPost(kCGHIDEventTap, down);
         Thread.Sleep(50);
@@ -52,9 +52,9 @@ public class MacMouseOperations : IMouseOperations
 
     public void LeftClick(POINT position, int stayPushMs)
     {
-        var macPoint = new MAC_POINT { X = position.mac_x, Y = position.mac_y };
-        var down = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseDown, macPoint, 0);
-        var up = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseUp, macPoint, 0);
+
+        var down = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseDown, position.MacPoint, 0);
+        var up = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseUp, position.MacPoint, 0);
 
         CGEventPost(kCGHIDEventTap, down);
         Thread.Sleep(stayPushMs);

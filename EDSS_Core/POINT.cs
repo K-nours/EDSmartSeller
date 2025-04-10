@@ -3,23 +3,17 @@
 using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct MAC_POINT
+public struct MAC_POINT(double x, double y)
 {
-    public double X;
-    public double Y;
-
-    public MAC_POINT(double x, double y)
-    {
-        X = x;
-        Y = y;
-    }
+    public double X = x;
+    public double Y = y;
 }
 
 [StructLayout(LayoutKind.Sequential)]
-public struct WIN_POINT
+public struct WIN_POINT(int x, int y)
 {
-    public int X;
-    public int Y;
+    public int X = x;
+    public int Y = y;
 }
 
 public class POINT

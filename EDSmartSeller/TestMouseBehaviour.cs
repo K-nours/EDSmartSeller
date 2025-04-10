@@ -54,7 +54,7 @@
             var coordStr = Console.ReadLine()!;
             var x = float.Parse(coordStr.Split(':')[0]);
             var y = float.Parse(coordStr.Split(":")[1]);
-            return new MAC_POINT { X = x, Y = y };
+            return new MAC_POINT (x, y);
         }
     }
 }
