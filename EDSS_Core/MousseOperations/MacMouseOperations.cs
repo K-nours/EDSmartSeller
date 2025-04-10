@@ -19,7 +19,12 @@ public class MacMouseOperations : IMouseOperations
     public POINT GetCursorPositon()
     {
         var eventRef = CGEventCreateMouseEvent(0, kCGEventMouseMoved, new MAC_POINT(), 0);
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        WriteDebug($"DEBUG: eventRef = {eventRef}");
+
+
         var location = CGEventGetLocation(eventRef);
+        WriteDebug(location.X + " " + location.Y);
         return new POINT(location);
     }
 
@@ -52,4 +57,36 @@ public class MacMouseOperations : IMouseOperations
         Thread.Sleep(stayPushMs);
         CGEventPost(kCGHIDEventTap, up);
     }
+
+    private void WriteDebug(string msg)
+    {
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine(msg);
+        Console.ResetColor();
+    }
 }
+
+
+
+//class Program_test_sample
+//{
+//    [StructLayout(LayoutKind.Sequential)]
+//    public struct CGPoint
+//    {
+//        public double X;
+//        public double Y;
+//    }
+
+//    [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+//    private static extern CGPoint CGEventGetLocation(IntPtr eventRef);
+
+//    [DllImport("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")]
+//    private static extern IntPtr CGEventCreate(IntPtr source);
+
+//    static void Main()
+//    {
+//        IntPtr eventRef = CGEventCreate(IntPtr.Zero);
+//        CGPoint point = CGEventGetLocation(eventRef);
+//        Console.WriteLine($"Pointer Location: X = {point.X}, Y = {point.Y}");
+//    }
+//}

@@ -2,12 +2,18 @@
 
 using System.Runtime.InteropServices;
 
+[StructLayout(LayoutKind.Sequential)]
 public struct MAC_POINT
 {
     public double X;
     public double Y;
-}
 
+    public MAC_POINT(double x, double y)
+    {
+        X = x;
+        Y = y;
+    }
+}
 
 [StructLayout(LayoutKind.Sequential)]
 public struct WIN_POINT

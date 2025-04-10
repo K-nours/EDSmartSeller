@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EDSmarteSeller;
+using EDSS_Core.Enum;
 using EDSS_Core.MousseOperations;
 using System.Reflection;
 
@@ -9,7 +10,8 @@ Console.WriteLine($"Starting Elite Dangerous : Smart Seller (V{assemblyName.Vers
 
 
 //ConfigurationManager configMgr = null;
-IMouseOperations mouseOperations = null;
+IMouseOperations? mouseOperations = null;
+var target = EnvironementTarget.Win;
 var chooseSelected = true;
 while (chooseSelected)
 {
@@ -23,12 +25,13 @@ while (chooseSelected)
     {
         case '1':
             mouseOperations = new WindowsMouseOperations();
-
+            target = EnvironementTarget.Win;
             chooseSelected = false;
             break;
 
         case '2':
             mouseOperations = new MacMouseOperations();
+            target = EnvironementTarget.Mac;
             chooseSelected = false;
             break;
         default:
@@ -37,7 +40,7 @@ while (chooseSelected)
     }
     Console.WriteLine();
 }
-var configMgr = new ConfigurationManager(mouseOperations);
+var configMgr = new ConfigurationManager(mouseOperations!, target);
 var edParams = configMgr.LoadConfiguration();
 if (edParams != null)
 {
@@ -50,7 +53,6 @@ if (edParams != null)
     }
 }
 
-
 if (edParams == null)
 {
     edParams = configMgr.ResetConfig();
@@ -59,9 +61,52 @@ if (edParams == null)
 
 Console.WriteLine();
 
+/*-----------------------------------------*\
+ *                                         *
+ *   Test debug Mac Should be delate later *
+ *                                         *    
+\*-----------------------------------------*/
+
+var keepTesting = true;
+if (target == EnvironementTarget.Mac)
+{
+    while (keepTesting)
+    {
+        Console.Write("Enter TEST mode [O/N]: ");
+        var testReponse = Console.ReadKey().KeyChar;
+        Console.WriteLine();
+        if ((char.ToUpper(testReponse)) == 'O')
+        {
+            var tester = new TestMouseBehaviour(mouseOperations!);
+            Console.WriteLine("Select operation :");
+            Console.WriteLine(" 1 - Move Mouse");
+            Console.WriteLine(" 2 - Get Moude location");
+            Console.Write("Response : ");
+            var testK = Console.ReadKey().KeyChar;
+            Console.WriteLine();
+            switch (testK)
+            {
+                case '1':
+                    tester.MoveMouseTo();
+                    break;
+                case '2':
+                    tester.GetMacMouseLocation();
+                    break;
+            }
+        }
+        else
+        {
+            keepTesting = false;
+        }
+    }
+
+    Console.WriteLine();
+}
+
+/*------------------ END ----------------------------*/
 
 var restart = true;
-var sellManeger = new ComoditySellers(edParams, mouseOperations);
+var sellManeger = new ComoditySellers(edParams, mouseOperations!);
 while (restart)
 {
     int initialQuantity;
