@@ -33,7 +33,7 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
             Thread.Sleep(ACTION_DELAY);
 
             var sellMod = ComputeSellMode(quantityTodecrease);
-
+            CheckCursorPosition(_selectResourceLocation);
             switch (sellMod)
             {
                 case SellMethode.Byclick:
@@ -44,9 +44,10 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
                     break;
             }
 
+
             mouseMnager.MoveCursor(_sellPosition);
             Thread.Sleep(ACTION_DELAY);
-            mouseMnager.LeftClick(_selectResourceLocation);
+            mouseMnager.LeftClick(_sellPosition);
 
             quantityTodecrease--;
 
@@ -68,6 +69,7 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
                 Console.ResetColor();
                 loopExtrPause = 0;
             }
+            CheckCursorPosition(_sellPosition);
         }
 
         Console.WriteLine("Finish");
@@ -99,9 +101,11 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
         mouseMnager.LeftClick(_decreaseResourceLocation, PushDelay);
         Thread.Sleep(ACTION_DELAY);
 
+        CheckCursorPosition(_decreaseResourceLocation);
         mouseMnager.MoveCursor(_increaseResourceLocation);
         mouseMnager.LeftClick(_increaseResourceLocation);
         Thread.Sleep(ACTION_DELAY);
+
     }
 
     private void SellByClick(int quantity)
@@ -111,9 +115,33 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
         {
             mouseMnager.LeftClick(_selectResourceLocation);
             Thread.Sleep(15);
+            CheckCursorPosition(_selectResourceLocation);
         }
+
         mouseMnager.MoveCursor(_increaseResourceLocation);
         mouseMnager.LeftClick(_increaseResourceLocation);
         Thread.Sleep(ACTION_DELAY);
+        CheckCursorPosition(_increaseResourceLocation);
+    }
+
+
+    private void CheckCursorPosition(POINT location)
+    {
+        var curretPosition = mouseMnager.GetCursorPositon();
+        if (!curretPosition.IsEqualTo(location))
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("PAUSE : mouse  have been moved by the user. Press any key to resume...");
+            Console.ResetColor();
+            Console.ReadKey();
+            Console.WriteLine("Resuming...");
+ 
+            for (int i = 3; i > 0; i--)
+            {
+                Console.WriteLine(i);
+                Thread.Sleep(1000);
+            }
+
+        }
     }
 }
