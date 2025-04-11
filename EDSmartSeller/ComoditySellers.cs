@@ -24,7 +24,7 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
         var loopExtrPause = 0;
         for (int i = 1; i <= initialQuantity; i++)
         {
-            Console.WriteLine($"Sells comodities {i} of {initialQuantity}");
+            Console.WriteLine($"Sells comodities {i} of {initialQuantity} - Qty remainig after sell should be  : {initialQuantity - i}");
             mouseMnager.MoveCursor(_selectResourceLocation);
             mouseMnager.LeftClick(_selectResourceLocation);
             Thread.Sleep(ACTION_DELAY);
