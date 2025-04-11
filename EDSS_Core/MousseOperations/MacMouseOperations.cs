@@ -2,7 +2,6 @@
 
 using EDSS_Core;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 
 public class MacMouseOperations : IMouseOperations
 {
@@ -26,7 +25,6 @@ public class MacMouseOperations : IMouseOperations
     {
         IntPtr eventRef = CGEventCreate(IntPtr.Zero);
         MAC_POINT location = CGEventGetLocation(eventRef);
-        WriteDebug(location.X + " " + location.Y);
         return new POINT(location);
     }
 
@@ -40,7 +38,6 @@ public class MacMouseOperations : IMouseOperations
 
     public void LeftClick(POINT position)
     {
-
         var down = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseDown, position.MacPoint, 0);
         var up = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseUp, position.MacPoint, 0);
 
@@ -52,19 +49,11 @@ public class MacMouseOperations : IMouseOperations
 
     public void LeftClick(POINT position, int stayPushMs)
     {
-
         var down = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseDown, position.MacPoint, 0);
         var up = CGEventCreateMouseEvent(nint.Zero, kCGEventLeftMouseUp, position.MacPoint, 0);
 
         CGEventPost(kCGHIDEventTap, down);
         Thread.Sleep(stayPushMs);
         CGEventPost(kCGHIDEventTap, up);
-    }
-
-    private void WriteDebug(string msg)
-    {
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine(msg);
-        Console.ResetColor();
     }
 }

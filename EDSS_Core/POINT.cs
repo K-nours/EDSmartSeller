@@ -71,8 +71,8 @@ public class POINT
 
     public bool IsEqualTo(POINT point)
     {
-        if (mac_x != point.mac_y) { return false; }
-        if (mac_y != point.mac_x) { return false; }
+        if (mac_x != point.mac_x) { return false; }
+        if (mac_y != point.mac_y) { return false; }
         if (win_x != point.win_x) { return false; }
         if (win_y != point.win_y) { return false; }
         return true;

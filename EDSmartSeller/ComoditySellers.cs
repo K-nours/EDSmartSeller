@@ -130,7 +130,7 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
         var curretPosition = mouseMnager.GetCursorPositon();
         if (!curretPosition.IsEqualTo(location))
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("PAUSE : mouse  have been moved by the user. Press any key to resume...");
             Console.ResetColor();
             Console.ReadKey();
