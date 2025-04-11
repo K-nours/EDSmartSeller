@@ -22,9 +22,12 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
     {
         var quantityTodecrease = initialQuantity - 1;
         var loopExtrPause = 0;
+        var startTime = DateTime.Now;
+        var remainingQty = initialQuantity;
         for (int i = 1; i <= initialQuantity; i++)
         {
-            Console.WriteLine($"Sells comodities {i} of {initialQuantity} - Qty remainig after sell should be  : {initialQuantity - i}");
+            remainingQty--;
+            Console.WriteLine($"Sells comodities {i} of {initialQuantity} - Qty remainig after sell should be  : {remainingQty}");
             mouseMnager.MoveCursor(_selectResourceLocation);
             mouseMnager.LeftClick(_selectResourceLocation);
             Thread.Sleep(ACTION_DELAY);
@@ -55,8 +58,12 @@ internal class ComoditySellers(EDSmartSellerParameters parameters, IMouseOperati
             }
             else
             {
+                var elaspedTime = DateTime.Now - startTime;
+                var elaspedDateTime = new DateTime().Add(elaspedTime);
+                var eta = new DateTime().AddSeconds(elaspedTime.TotalSeconds * remainingQty / i);
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Extra Pause  {extraPause}s");
+                Console.WriteLine($"Elasped time :  {elaspedDateTime:HH:mm:ss} Estimed time remaining : {eta:HH:mm:ss}");
                 Thread.Sleep((int)extraPause * 1000);
                 Console.ResetColor();
                 loopExtrPause = 0;
