@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDSmarteSeller", "EDSmartSeller\EDSmarteSeller.csproj", "{E9A1EFAF-8B61-48A7-8914-CC2748C74E4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDSmartSeller", "EDSmartSeller\EDSmartSeller.csproj", "{E9A1EFAF-8B61-48A7-8914-CC2748C74E4D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDSmartSellerUI", "EDSmartSellerUI\EDSmartSellerUI.csproj", "{77B712C2-CB24-490B-B2D9-19A31B2FE1A1}"
 EndProject

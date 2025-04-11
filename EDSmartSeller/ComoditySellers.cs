@@ -1,4 +1,4 @@
-﻿namespace EDSmarteSeller;
+﻿namespace EDSmartSeller;
 using EDSS_Core;
 using EDSS_Core.MousseOperations;
 

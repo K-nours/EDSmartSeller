@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using EDSmarteSeller;
+using EDSmartSeller;
 using EDSS_Core.Enum;
 using EDSS_Core.MousseOperations;
 using System.Reflection;
