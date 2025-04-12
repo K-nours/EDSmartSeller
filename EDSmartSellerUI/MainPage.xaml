@@ -15,7 +15,7 @@
 
         <ScrollView Grid.Column="0">
             <VerticalStackLayout  Margin="20" Spacing="15">
-                <Label  Text="Calibration" FontSize="Title"/>
+                <Label Text="Calibration" FontSize="Title"/>
                 <Label x:Name="CalibrationStatuLabel" Text="No calibration data found" FontSize="Body"/>
                 <Button x:Name="CalibrationButton" Text="Calibrate" Clicked="OnCalibrate"/>
                 <Entry x:Name="validatePosition" IsVisible="False" TextChanged="OnRegisterPosition" Background="Red"/>
@@ -27,22 +27,16 @@
                 <Label Text="Wait between sell" FontSize="Default" />
                 <Entry x:Name="WaitTimeInput" Keyboard="Numeric" Placeholder="Ex : 1.5" TextChanged="ValidateNumericValue"/>
 
-                <Button x:Name="SellButton" Text="Start selling" IsEnabled="False"/>
+                <Label Text="Extra pause" FontSize="Default" />
+                <Entry x:Name="ExtraPauseTimeInput" Keyboard="Numeric" Placeholder="Ex : 1.5" TextChanged="ValidateNumericValue"/>
+
+                <Button x:Name="SellButton" Text="Start selling" IsEnabled="{Binding IsSellButtonActive}"/>
                 <Button x:Name="Abortutto" Text="Emergecy Abort" IsVisible="False" />
 
             </VerticalStackLayout>
         </ScrollView>
         <ScrollView Grid.Column="1" Margin="10" BackgroundColor="LightGray" x:Name="DisplayInfoSroll" >
-            <!--<Editor
-                x:Name="ConsoleLog"
-                AutoSize="TextChanges"
-                BackgroundColor="LightGray"
-                TextColor="Black"
-                FontSize="16"
-                IsReadOnly="True"
-                />-->
             <StackLayout x:Name="DisplayInfo" Padding="5" ChildAdded="ScrollToEnd">
-                
             </StackLayout>
         </ScrollView>
     </Grid>

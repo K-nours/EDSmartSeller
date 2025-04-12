@@ -38,37 +38,46 @@
             {
                 Console.WriteLine();
                 var data = File.ReadAllText(_saveFile);
-                var param = JsonConvert.DeserializeObject<EDSmartSellerParameters>(data);
-                return param;
+                try {
+                    var param = JsonConvert.DeserializeObject<EDSmartSellerParameters>(data);
+                    return param;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] Impossible de charger la configuration : {ex.Message}");
+                    File.Delete(_saveFile);
+                    return null;
+                }
+
             }
             return null;
         }
 
 
-        public  EDSmartSellerParameters ResetConfig()
+        public  CalibrationPoints ResetConfig()
         {
-            EDSmartSellerParameters eDSmartSellerParameters = new();
+            CalibrationPoints calibrationPoints = new();
             Console.WriteLine("Demarrage Caliabration...");
             Console.WriteLine("Etape 1 Deplacer la sourie sur la ligne de la ressource a vendre et appuyer sur une touche");
             Console.ReadKey();
-            eDSmartSellerParameters.SelectResourceLocation = _mouseOperations.GetCursorPositon();
-            DisplayInfo($"Position save for select resource {eDSmartSellerParameters.SelectResourceLocation.win_x}:{eDSmartSellerParameters.SelectResourceLocation.win_y}");
+            calibrationPoints.SelectResourceLocation = _mouseOperations.GetCursorPositon();
+            DisplayInfo($"Position save for select resource {calibrationPoints.SelectResourceLocation.win_x}:{calibrationPoints.SelectResourceLocation.win_y}");
             Console.WriteLine("Etape 2 deplacer la sourie sur le bouton quantité \"-\" et appuyer sur une touche");
             Console.ReadKey();
-            eDSmartSellerParameters.DecreaseResourceLocation = _mouseOperations.GetCursorPositon();
-            DisplayInfo($"Position save for decrease Reseource {eDSmartSellerParameters.DecreaseResourceLocation.win_x}:{eDSmartSellerParameters.DecreaseResourceLocation.win_y}");
+            calibrationPoints.DecreaseResourceLocation = _mouseOperations.GetCursorPositon();
+            DisplayInfo($"Position save for decrease Reseource {calibrationPoints.DecreaseResourceLocation.win_x}:{calibrationPoints.DecreaseResourceLocation.win_y}");
 
             Console.WriteLine("Etape 3 deplacer la souri sur le bouton de quantité \"+\" et appuyer sur une touche");
             Console.ReadKey();
-            eDSmartSellerParameters.IncreaseResourceLocation = _mouseOperations.GetCursorPositon();
-            DisplayInfo($"Position save for increase resource {eDSmartSellerParameters.IncreaseResourceLocation.win_x}:{eDSmartSellerParameters.IncreaseResourceLocation.win_y}");
+            calibrationPoints.IncreaseResourceLocation = _mouseOperations.GetCursorPositon();
+            DisplayInfo($"Position save for increase resource {calibrationPoints.IncreaseResourceLocation.win_x}:{calibrationPoints.IncreaseResourceLocation.win_y}");
 
             Console.WriteLine("Etape 4 deplacer la souri sur le bouton de vente et appuyer sur une touche");
             Console.ReadKey();
-            eDSmartSellerParameters.SellPosition = _mouseOperations.GetCursorPositon();
-            DisplayInfo($"Position of sell button {eDSmartSellerParameters.SellPosition.win_x}:{eDSmartSellerParameters.SellPosition.win_y}");
+            calibrationPoints.SellPosition = _mouseOperations.GetCursorPositon();
+            DisplayInfo($"Position of sell button {calibrationPoints.SellPosition.win_x}:{calibrationPoints.SellPosition.win_y}");
 
-            return eDSmartSellerParameters;
+            return calibrationPoints;
         }
 
         private static void DisplayInfo(string text)

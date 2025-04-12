@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EDSmartSeller;
+using EDSS_Core;
 using EDSS_Core.Enum;
 using EDSS_Core.MousseOperations;
 using System.Reflection;
@@ -55,7 +56,8 @@ if (edParams != null)
 
 if (edParams == null)
 {
-    edParams = configMgr.ResetConfig();
+    edParams = new EDSmartSellerParameters();
+    edParams.CalibrationPoints = configMgr.ResetConfig();
     configMgr.SaveConfiguration(edParams);
 }
 
@@ -90,7 +92,7 @@ while (restart)
         Console.WriteLine(i);
         Thread.Sleep(1000);
     }
-    sellManeger.Sell(initialQuantity, waitTimeSeconde, extraPause);
+    await sellManeger.Sell(initialQuantity, waitTimeSeconde, extraPause);
 
     Console.ForegroundColor = ConsoleColor.Green;
     var totalTime = DateTime.Now - startTime;

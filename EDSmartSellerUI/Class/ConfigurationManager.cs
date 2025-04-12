@@ -3,16 +3,14 @@
 using Newtonsoft.Json;
 using EDSS_Core.MousseOperations;
 using EDSS_Core;
-using EDSmartSellerUI.Enum;
 using EDSmartSellerUI.Events;
+using EDSS_Core.Enum;
 
 internal class ConfigurationManager
 {
     private readonly string saveFile = ".\\EDSSconfig.json";
     private IMouseOperations _mouseOperations;
     private bool _keyPress = false;
-
-
 
     public ConfigurationManager(IMouseOperations mouseOperations)
     {
@@ -37,34 +35,34 @@ internal class ConfigurationManager
     }
 
 
-    public async Task<EDSmartSellerParameters> ResetConfig()
+    public async Task<CalibrationPoints> ResetCalibrationConfig()
     {
-        EDSmartSellerParameters eDSmartSellerParameters = new EDSmartSellerParameters();
+        CalibrationPoints calibrationPoints = new CalibrationPoints();
         DisplayMessage("Demarrage Caliabration...");
 
         DisplayMessage("Etape 1 Deplacer la sourie sur la ligne de la ressource a vendre et appuyer sur une touche");
         await Task.Run(WaitForKeyPress);
 
-        eDSmartSellerParameters.SelectResourceLocation = _mouseOperations.GetCursorPositon();
+        calibrationPoints.SelectResourceLocation = _mouseOperations.GetCursorPositon();
 
-        DisplayMessage($"Position save for select resource {eDSmartSellerParameters.SelectResourceLocation.displayX}:{eDSmartSellerParameters.SelectResourceLocation.displayY}", MessageType.Info);
+        DisplayMessage($"Position save for select resource {calibrationPoints.SelectResourceLocation.displayX}:{calibrationPoints.SelectResourceLocation.displayY}", MessageType.Info);
 
         DisplayMessage("Etape 2 deplacer la sourie sur le bouton quantité \"-\" et appuyer sur une touche");
         await Task.Run(WaitForKeyPress);
-        eDSmartSellerParameters.DecreaseResourceLocation = _mouseOperations.GetCursorPositon();
-        DisplayMessage($"Position save for decrease Reseource {eDSmartSellerParameters.DecreaseResourceLocation.displayX}:{eDSmartSellerParameters.DecreaseResourceLocation.displayY}", MessageType.Info);
+        calibrationPoints.DecreaseResourceLocation = _mouseOperations.GetCursorPositon();
+        DisplayMessage($"Position save for decrease Reseource {calibrationPoints.DecreaseResourceLocation.displayX}:{calibrationPoints.DecreaseResourceLocation.displayY}", MessageType.Info);
 
         DisplayMessage("Etape 3 deplacer la souri sur le bouton de quantité \"+\" et appuyer sur une touche");
         await Task.Run(WaitForKeyPress);
-        eDSmartSellerParameters.IncreaseResourceLocation = _mouseOperations.GetCursorPositon();
-        DisplayMessage($"Position save for increase resource {eDSmartSellerParameters.IncreaseResourceLocation.displayX}:{eDSmartSellerParameters.IncreaseResourceLocation.displayY}", MessageType.Info);
+        calibrationPoints.IncreaseResourceLocation = _mouseOperations.GetCursorPositon();
+        DisplayMessage($"Position save for increase resource {calibrationPoints.IncreaseResourceLocation.displayX}:{calibrationPoints.IncreaseResourceLocation.displayY}", MessageType.Info);
 
         DisplayMessage("Etape 4 deplacer la souri sur le bouton de vente et appuyer sur une touche");
         await Task.Run(WaitForKeyPress);
-        eDSmartSellerParameters.SellPosition = _mouseOperations.GetCursorPositon();
-        DisplayMessage($"Position of sell button {eDSmartSellerParameters.SellPosition.displayY}:{eDSmartSellerParameters.SellPosition.displayY}", MessageType.Info);
+        calibrationPoints.SellPosition = _mouseOperations.GetCursorPositon();
+        DisplayMessage($"Position of sell button {calibrationPoints.SellPosition.displayY}:{calibrationPoints.SellPosition.displayY}", MessageType.Info);
 
-        return eDSmartSellerParameters;
+        return calibrationPoints;
 
     }
 

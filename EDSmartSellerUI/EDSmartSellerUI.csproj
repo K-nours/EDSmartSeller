@@ -28,8 +28,8 @@
 		<ApplicationId>com.companyname.edsmartsellerui</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
-		<ApplicationVersion>0</ApplicationVersion>
+		<ApplicationDisplayVersion>2.0.0.0</ApplicationDisplayVersion>
+		<ApplicationVersion>2</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -40,6 +40,8 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<Title>EDSmartSeller</Title>
+		<Version>$(ApplicationVersion)</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -69,6 +71,10 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\EDSS_Core\EDSS_Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Enum\" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace EDSmartSellerUI.Enum;
+﻿namespace EDSS_Core.Enum;
 public enum MessageType
 {
     Default,

@@ -1,6 +1,6 @@
 ﻿namespace EDSmartSellerUI.Events;
 
-using EDSmartSellerUI.Enum;
+using EDSS_Core.Enum;
 
 public static class MessageEvent{
     public delegate void AddMessageEventHandler(object sender, string message,MessageType messageType);
